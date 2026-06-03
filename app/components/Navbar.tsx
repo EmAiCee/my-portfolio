@@ -38,7 +38,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu when clicking a link
   const handleLinkClick = () => {
     setIsOpen(false);
   };
@@ -65,7 +64,7 @@ export default function Navbar() {
             </span>
           </motion.div>
 
-          {/* Desktop Menu - Hidden on mobile */}
+          {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
               <motion.a
@@ -96,7 +95,7 @@ export default function Navbar() {
               </motion.a>
               <motion.a
                 whileHover={{ y: -2 }}
-                href="mailto:john@example.com"
+                href="mailto:musa@example.com"
                 className="text-gray-300 hover:text-white"
               >
                 <Mail className="w-5 h-5" />
@@ -126,7 +125,6 @@ export default function Navbar() {
             className="md:hidden mt-4 rounded-xl overflow-hidden"
           >
             <div className="backdrop-blur-md bg-black/70 rounded-xl p-4 border border-white/10">
-              {/* Navigation Links */}
               <div className="space-y-2 mb-4">
                 {navLinks.map((link) => (
                   <a
@@ -140,10 +138,8 @@ export default function Navbar() {
                 ))}
               </div>
               
-              {/* Divider */}
               <div className="border-t border-white/10 my-4"></div>
               
-              {/* Social Icons - Centered and properly spaced */}
               <div className="flex items-center justify-center space-x-8 pt-2">
                 <motion.a
                   whileHover={{ y: -3 }}
@@ -151,7 +147,6 @@ export default function Navbar() {
                   target="_blank"
                   onClick={handleLinkClick}
                   className="text-gray-300 hover:text-white transition-colors p-2"
-                  aria-label="GitHub"
                 >
                   <GithubIcon className="w-6 h-6" />
                 </motion.a>
@@ -161,16 +156,14 @@ export default function Navbar() {
                   target="_blank"
                   onClick={handleLinkClick}
                   className="text-gray-300 hover:text-white transition-colors p-2"
-                  aria-label="LinkedIn"
                 >
                   <LinkedinIcon className="w-6 h-6" />
                 </motion.a>
                 <motion.a
                   whileHover={{ y: -3 }}
-                  href="mailto:john@example.com"
+                  href="mailto:musa@example.com"
                   onClick={handleLinkClick}
                   className="text-gray-300 hover:text-white transition-colors p-2"
-                  aria-label="Email"
                 >
                   <Mail className="w-6 h-6" />
                 </motion.a>
