@@ -1,21 +1,42 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Message from '@/models/Message';
-import jwt from 'jsonwebtoken';
+import { cookies } from 'next/headers';
+import { jwtVerify } from 'jose';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const secret = new TextEncoder().encode(JWT_SECRET);
+
+// Helper to verify auth
+async function verifyAuth() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('token');
+  
+  if (!token) {
+    return null;
+  }
+  
+  try {
+    const { payload } = await jwtVerify(token.value, secret);
+    return payload;
+  } catch (error) {
+    console.error('Auth verification error:', error);
+    return null;
+  }
+}
 
 // GET - Fetch all messages (protected)
 export async function GET(request: Request) {
   try {
-    const token = request.headers.get('authorization')?.split(' ')[1];
-    if (!token) {
+    const user = await verifyAuth();
+    if (!user) {
+      console.log('Messages API - Unauthorized access attempt');
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-    jwt.verify(token, JWT_SECRET);
-
+    
     await connectDB();
     const messages = await Message.find().sort({ createdAt: -1 });
+    console.log(`Messages API - Found ${messages.length} messages`);
     return NextResponse.json(messages);
   } catch (error) {
     console.error('Fetch messages error:', error);
@@ -26,9 +47,10 @@ export async function GET(request: Request) {
 // PUT - Mark message as read (protected)
 export async function PUT(request: Request) {
   try {
-    const token = request.headers.get('authorization')?.split(' ')[1];
-    if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    jwt.verify(token, JWT_SECRET);
+    const user = await verifyAuth();
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
     await connectDB();
     const { id, read } = await request.json();
@@ -43,9 +65,10 @@ export async function PUT(request: Request) {
 // DELETE - Delete message (protected)
 export async function DELETE(request: Request) {
   try {
-    const token = request.headers.get('authorization')?.split(' ')[1];
-    if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    jwt.verify(token, JWT_SECRET);
+    const user = await verifyAuth();
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
     await connectDB();
     const { searchParams } = new URL(request.url);

@@ -1,22 +1,35 @@
 "use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Eye, EyeOff, LogIn, Shield, Mail, Lock } from 'lucide-react';
+import { Eye, EyeOff, LogIn, Shield, Mail, Lock, CheckCircle } from 'lucide-react';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    // Check for session expired message
+    if (searchParams.get('session') === 'expired') {
+      setSuccess('Session expired. Please login again.');
+      setTimeout(() => setSuccess(''), 5000);
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
+    setSuccess('');
+
+    console.log('Attempting login with:', { email });
 
     try {
       const res = await fetch('/api/auth/login', {
@@ -26,13 +39,19 @@ export default function AdminLogin() {
       });
 
       const data = await res.json();
+      console.log('Login response:', { status: res.status, data });
+
       if (res.ok) {
-        localStorage.setItem('token', data.token);
-        router.push('/admin/dashboard');
+        setSuccess('Login successful! Redirecting...');
+        // FIX: Use window.location.href instead of router.push
+        setTimeout(() => {
+          window.location.href = '/admin/dashboard';
+        }, 500);
       } else {
         setError(data.error || 'Login failed. Please check your credentials.');
       }
     } catch (err) {
+      console.error('Login error:', err);
       setError('Network error. Please try again.');
     } finally {
       setIsLoading(false);
@@ -41,7 +60,7 @@ export default function AdminLogin() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Animated background elements */}
+      {/* Background animations remain the same */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           animate={{
@@ -90,6 +109,18 @@ export default function AdminLogin() {
             <p className="text-gray-300">Sign in to access the admin dashboard</p>
           </div>
 
+          {/* Success Message */}
+          {success && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-4 bg-green-500/10 border border-green-500/30 rounded-xl p-3 flex items-center gap-2"
+            >
+              <CheckCircle className="w-5 h-5 text-green-400" />
+              <p className="text-green-400 text-sm">{success}</p>
+            </motion.div>
+          )}
+
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email Field */}
@@ -101,7 +132,7 @@ export default function AdminLogin() {
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
                   type="email"
-                  placeholder="admin@example.com"
+                  placeholder="algoni@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all text-white placeholder-gray-400"
@@ -172,7 +203,7 @@ export default function AdminLogin() {
           {/* Footer */}
           <div className="mt-6 text-center">
             <p className="text-gray-500 text-xs">
-              Secure admin area. All access is logged.
+              Secure admin area. Session expires after 25 minutes of inactivity.
             </p>
           </div>
         </div>
