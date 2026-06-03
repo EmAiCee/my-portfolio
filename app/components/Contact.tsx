@@ -33,16 +33,38 @@ export default function Contact() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 3000);
-    setFormData({ name: "", email: "", message: "" });
+    setError("");
+
+    try {
+      // Actual API call to your backend
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        setFormData({ name: "", email: "", message: "" });
+        setTimeout(() => setIsSubmitted(false), 5000);
+      } else {
+        setError(data.error || 'Failed to send message. Please try again.');
+      }
+    } catch (err) {
+      console.error('Error sending message:', err);
+      setError('Network error. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -53,9 +75,9 @@ export default function Contact() {
   };
 
   const contactInfo = [
-    { icon: Mail, label: "Email", value: "john.doe@example.com", href: "mailto:john.doe@example.com" },
-    { icon: Phone, label: "Phone", value: "+1 (555) 123-4567", href: "tel:+15551234567" },
-    { icon: MapPin, label: "Location", value: "San Francisco, CA", href: "#" },
+    { icon: Mail, label: "Email", value: "algonimusa202@gmail.com", href: "mailto:algonimusa202@gmail.com" },
+    { icon: Phone, label: "Phone", value: "+234 (XXX) XXX-XXXX", href: "tel:+234" },
+    { icon: MapPin, label: "Location", value: "Nigeria", href: "#" },
   ];
 
   const socialLinks = [
@@ -191,6 +213,18 @@ export default function Contact() {
                     placeholder="Tell me about your project..."
                   />
                 </div>
+                
+                {/* Error Message */}
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center text-red-400 text-sm bg-red-500/10 p-3 rounded-lg"
+                  >
+                    {error}
+                  </motion.div>
+                )}
+                
                 <motion.button
                   type="submit"
                   whileHover={{ scale: 1.02 }}
@@ -199,7 +233,10 @@ export default function Contact() {
                   className="w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg font-semibold flex items-center justify-center gap-2 hover:shadow-lg transition-all disabled:opacity-50"
                 >
                   {isSubmitting ? (
-                    "Sending..."
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      Sending...
+                    </>
                   ) : (
                     <>
                       Send Message
@@ -207,13 +244,14 @@ export default function Contact() {
                     </>
                   )}
                 </motion.button>
+                
                 {isSubmitted && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-center text-green-400"
+                    className="text-center text-green-400 text-sm bg-green-500/10 p-3 rounded-lg"
                   >
-                    Message sent successfully! I'll get back to you soon.
+                   Message sent successfully! I'll get back to you soon.
                   </motion.div>
                 )}
               </div>
