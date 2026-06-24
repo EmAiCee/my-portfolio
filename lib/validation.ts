@@ -12,14 +12,14 @@ export const contactSchema = z.object({
 });
 
 export const projectSchema = z.object({
-  title: z.string().min(3, 'Title too short').max(100, 'Title too long'),
-  description: z.string().min(20, 'Description too short').max(1000, 'Description too long'),
+  title: z.string().min(3, 'Title must be at least 3 characters').max(100, 'Title too long'),
+  description: z.string().min(10, 'Description must be at least 10 characters').max(1000, 'Description too long'),
   image: z.string().url('Invalid image URL'),
   tech: z.array(z.string()),
   github: z.string().url('Invalid GitHub URL'),
   live: z.string().url('Invalid live demo URL'),
   category: z.enum(['fullstack', 'frontend', 'backend', 'devops']),
-  featured: z.boolean().optional(),
+  featured: z.boolean().optional().default(false),
 });
 
 export type LoginInput = z.infer<typeof loginSchema>;
