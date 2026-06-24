@@ -46,15 +46,28 @@ export async function POST(request: Request) {
     await connectDB();
     const body = await request.json();
     
+    console.log('📝 Received project data:', JSON.stringify(body, null, 2));
+    
     // Validate with Zod
     const validation = projectSchema.safeParse(body);
     if (!validation.success) {
+      const errors = validation.error.errors.map(err => ({
+        path: err.path.join('.'),
+        message: err.message
+      }));
+      
+      console.log('❌ Validation errors:', JSON.stringify(errors, null, 2));
+      
       return NextResponse.json(
-        { error: validation.error.errors[0].message },
+        { 
+          error: errors[0]?.message || 'Invalid project data',
+          details: errors 
+        },
         { status: 400 }
       );
     }
     
+    console.log('✅ Validation passed, creating project...');
     const project = await Project.create(validation.data);
     return NextResponse.json(project, { status: 201 });
   } catch (error) {
@@ -72,8 +85,36 @@ export async function PUT(request: Request) {
     }
 
     await connectDB();
-    const { id, ...updates } = await request.json();
-    const project = await Project.findByIdAndUpdate(id, updates, { new: true });
+    const body = await request.json();
+    const { id, ...updates } = body;
+    
+    // Validate with Zod
+    const validation = projectSchema.safeParse(updates);
+    if (!validation.success) {
+      const errors = validation.error.errors.map(err => ({
+        path: err.path.join('.'),
+        message: err.message
+      }));
+      
+      return NextResponse.json(
+        { 
+          error: errors[0]?.message || 'Invalid project data',
+          details: errors 
+        },
+        { status: 400 }
+      );
+    }
+    
+    const project = await Project.findByIdAndUpdate(
+      id, 
+      validation.data, 
+      { new: true, runValidators: true }
+    );
+    
+    if (!project) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+    }
+    
     return NextResponse.json(project);
   } catch (error) {
     console.error('Update project error:', error);
@@ -92,8 +133,17 @@ export async function DELETE(request: Request) {
     await connectDB();
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
-    await Project.findByIdAndDelete(id);
-    return NextResponse.json({ message: 'Project deleted' });
+    
+    if (!id) {
+      return NextResponse.json({ error: 'Project ID required' }, { status: 400 });
+    }
+    
+    const deleted = await Project.findByIdAndDelete(id);
+    if (!deleted) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
+    }
+    
+    return NextResponse.json({ message: 'Project deleted successfully' });
   } catch (error) {
     console.error('Delete project error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

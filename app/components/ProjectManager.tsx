@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Edit, Trash2, X, Save } from 'lucide-react';
+import ImageUpload from './ImageUpload';
 
 interface Project {
   _id: string;
@@ -32,8 +33,6 @@ export default function ProjectManager() {
     featured: false,
   });
 
-  // No localStorage token needed - cookies are automatic
-
   useEffect(() => {
     fetchProjects();
   }, []);
@@ -62,7 +61,6 @@ export default function ProjectManager() {
         method: editing ? 'PUT' : 'POST',
         headers: {
           'Content-Type': 'application/json',
-          // No Authorization header needed - cookie is sent automatically
         },
         body: JSON.stringify(editing ? { id: editing._id, ...projectData } : projectData),
       });
@@ -84,11 +82,10 @@ export default function ProjectManager() {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm('Are you sure you want to delete this project? This action cannot be undone.')) {
+    if (confirm('Are you sure you want to delete this project?')) {
       try {
         const res = await fetch(`/api/projects?id=${id}`, {
           method: 'DELETE',
-          // No Authorization header needed - cookie is sent automatically
         });
         
         if (res.ok) {
@@ -173,6 +170,7 @@ export default function ProjectManager() {
           </div>
           
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Row 1: Title and Category */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
                 type="text"
@@ -194,6 +192,7 @@ export default function ProjectManager() {
               </select>
             </div>
             
+            {/* Row 2: Description (Full width) */}
             <textarea
               placeholder="Description *"
               value={formData.description}
@@ -203,25 +202,15 @@ export default function ProjectManager() {
               required
             />
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="text"
-                placeholder="Image URL *"
-                value={formData.image}
-                onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500"
-                required
-              />
-              <input
-                type="text"
-                placeholder="Technologies (comma separated) *"
-                value={formData.tech}
-                onChange={(e) => setFormData({ ...formData, tech: e.target.value })}
-                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500"
-                required
+            {/* Row 3: Image Upload (Full width) */}
+            <div className="w-full">
+              <ImageUpload
+                onImageUploaded={(url) => setFormData({ ...formData, image: url })}
+                currentImage={formData.image}
               />
             </div>
             
+            {/* Row 4: GitHub and Live URLs */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
                 type="url"
@@ -241,6 +230,19 @@ export default function ProjectManager() {
               />
             </div>
             
+            {/* Row 5: Technologies (Full width) */}
+            <div className="w-full">
+              <input
+                type="text"
+                placeholder="Technologies (comma separated) *"
+                value={formData.tech}
+                onChange={(e) => setFormData({ ...formData, tech: e.target.value })}
+                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500"
+                required
+              />
+            </div>
+            
+            {/* Row 6: Featured checkbox */}
             <label className="flex items-center gap-2 text-white cursor-pointer">
               <input
                 type="checkbox"
@@ -251,6 +253,7 @@ export default function ProjectManager() {
               <span>Featured Project (appears first in portfolio)</span>
             </label>
             
+            {/* Row 7: Buttons */}
             <div className="flex gap-3 pt-2">
               <button
                 type="submit"
@@ -293,7 +296,7 @@ export default function ProjectManager() {
             <p>No projects yet. Click "Add New Project" to get started.</p>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-3 max-h-96 overflow-y-auto">
             {projects.map((project, index) => (
               <motion.div
                 key={project._id}
