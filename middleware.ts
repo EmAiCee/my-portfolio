@@ -13,13 +13,20 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get('token')?.value;
   
-  console.log('Middleware - Path:', pathname);
-  console.log('Middleware - Token exists:', !!token);
+  console.log('🔵 Middleware - Path:', pathname);
+  console.log('🔵 Middleware - Method:', request.method);
+  console.log('🔵 Middleware - Token exists:', !!token);
   
   // Allow public paths
   if (publicPaths.some(path => pathname === path) || 
       publicApiPaths.some(path => pathname.startsWith(path))) {
-    console.log('Middleware - Public path, allowing');
+    console.log('✅ Middleware - Public path, allowing');
+    return NextResponse.next();
+  }
+  
+  // ✅ ALLOW public GET requests to /api/projects
+  if (pathname === '/api/projects' && request.method === 'GET') {
+    console.log('✅ Middleware - Public GET to projects, allowing');
     return NextResponse.next();
   }
   
@@ -30,7 +37,7 @@ export async function middleware(request: NextRequest) {
   
   if (isAdminRoute || isProtectedApi) {
     if (!token) {
-      console.log('Middleware - No token found, redirecting to login');
+      console.log('❌ Middleware - No token found, redirecting to login');
       if (isAdminRoute) {
         const loginUrl = new URL('/admin/login', request.url);
         return NextResponse.redirect(loginUrl);
@@ -41,10 +48,10 @@ export async function middleware(request: NextRequest) {
     try {
       // Verify token using jose (works in Edge runtime)
       const { payload } = await jwtVerify(token, secret);
-      console.log('Middleware - Token valid for:', payload.email);
+      console.log('✅ Middleware - Token valid for:', payload.email);
       return NextResponse.next();
     } catch (error) {
-      console.log('Middleware - Invalid token:', error.message);
+      console.log('❌ Middleware - Invalid token:', error.message);
       if (isAdminRoute) {
         const loginUrl = new URL('/admin/login', request.url);
         const response = NextResponse.redirect(loginUrl);
