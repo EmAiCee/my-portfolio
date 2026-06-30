@@ -3,27 +3,7 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { useState } from "react";
-
-// Custom SVG Icons
-const GithubIcon = ({ className = "w-5 h-5" }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-  </svg>
-);
-
-const LinkedinIcon = ({ className = "w-5 h-5" }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-    <rect x="2" y="9" width="4" height="12"/>
-    <circle cx="4" cy="4" r="2"/>
-  </svg>
-);
-
-const TwitterIcon = ({ className = "w-5 h-5" }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.3 9 4-1-2.3.2-5.5 3-6 .8 0 1.5.3 2 .7 1.4-.2 2.7-1 4-1.8-.5 1.5-1.5 2.6-2.5 3.5 1.2-.1 2.5-.6 3.5-1.3z"/>
-  </svg>
-);
+import { FaGithub, FaLinkedin, FaTwitter, FaWhatsapp } from "react-icons/fa";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -41,7 +21,6 @@ export default function Contact() {
     setError("");
 
     try {
-      // Actual API call to your backend
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
@@ -80,11 +59,16 @@ export default function Contact() {
     { icon: MapPin, label: "Location", value: "Nigeria", href: "#" },
   ];
 
-  const socialLinks = [
-    { icon: GithubIcon, href: "https://github.com", label: "GitHub" },
-    { icon: LinkedinIcon, href: "https://linkedin.com", label: "LinkedIn" },
-    { icon: TwitterIcon, href: "https://twitter.com", label: "Twitter" },
-  ];
+  // WhatsApp link - Replace with your number
+  const whatsappNumber = "2349014899278"; // <-- CHANGE THIS
+  const whatsappLink = `https://wa.me/${whatsappNumber}`;
+
+ const socialLinks = [
+  { icon: FaGithub, href: "https://github.com/yourusername", label: "GitHub", color: "hover:text-white" },
+  { icon: FaLinkedin, href: "https://www.linkedin.com/in/emaicee", label: "LinkedIn", color: "hover:text-blue-400" },
+  { icon: FaTwitter, href: "https://twitter.com/yourusername", label: "Twitter", color: "hover:text-blue-400" },
+  { icon: FaWhatsapp, href: whatsappLink, label: "WhatsApp", color: "hover:text-green-400" },
+];
 
   return (
     <section id="contact" className="py-20 px-4 relative overflow-hidden">
@@ -141,18 +125,20 @@ export default function Contact() {
 
             <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
               <h3 className="text-2xl font-bold mb-6">Follow Me</h3>
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-4">
                 {socialLinks.map((social, idx) => (
                   <motion.a
                     key={social.label}
                     href={social.href}
                     target="_blank"
+                    rel="noopener noreferrer"
                     whileHover={{ y: -5 }}
                     whileTap={{ scale: 0.95 }}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.1 }}
-                    className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center hover:bg-purple-500/40 transition-all"
+                    className={`w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center hover:bg-purple-500/40 transition-all ${social.color}`}
+                    aria-label={social.label}
                   >
                     <social.icon className="w-5 h-5 text-purple-400" />
                   </motion.a>
@@ -251,7 +237,7 @@ export default function Contact() {
                     animate={{ opacity: 1, y: 0 }}
                     className="text-center text-green-400 text-sm bg-green-500/10 p-3 rounded-lg"
                   >
-                   Message sent successfully! I'll get back to you soon.
+                    Message sent successfully! I'll get back to you soon.
                   </motion.div>
                 )}
               </div>

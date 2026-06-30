@@ -17,7 +17,7 @@ export default function Footer() {
           >
             <Code2 className="w-5 h-5 text-purple-500" />
             <span className="text-sm text-gray-400">
-              © {currentYear} John Doe. All rights reserved.
+              © {currentYear} Musa Algoni. All rights reserved.
             </span>
           </motion.div>
           
@@ -26,9 +26,7 @@ export default function Footer() {
             whileInView={{ opacity: 1 }}
             className="flex items-center gap-1 text-sm text-gray-400"
           >
-            <span>Built with</span>
-            <Heart className="w-4 h-4 text-red-500 fill-red-500" />
-            <span>using Next.js & Tailwind CSS</span>
+           
           </motion.div>
         </div>
       </div>

@@ -3,21 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X, Code2, Mail } from "lucide-react";
-
-// Custom SVG Icons
-const GithubIcon = ({ className = "w-5 h-5" }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-  </svg>
-);
-
-const LinkedinIcon = ({ className = "w-5 h-5" }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-    <rect x="2" y="9" width="4" height="12"/>
-    <circle cx="4" cy="4" r="2"/>
-  </svg>
-);
+import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -29,6 +15,10 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  // WhatsApp number - Replace with your actual number
+  const whatsappNumber = "2349014899278"; // <-- CHANGE THIS
+  const whatsappLink = `https://wa.me/${whatsappNumber}`;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,24 +69,36 @@ export default function Navbar() {
             <div className="flex items-center space-x-4">
               <motion.a
                 whileHover={{ y: -2 }}
-                href="https://github.com"
+                href="https://github.com/EmAiCee"
                 target="_blank"
-                className="text-gray-300 hover:text-white"
+                className="text-gray-300 hover:text-white transition-colors"
+                aria-label="GitHub"
               >
-                <GithubIcon className="w-5 h-5" />
+                <FaGithub className="w-5 h-5" />
               </motion.a>
               <motion.a
                 whileHover={{ y: -2 }}
-                href="https://linkedin.com"
+                 href="https://www.linkedin.com/in/emaicee"
                 target="_blank"
-                className="text-gray-300 hover:text-white"
+                className="text-gray-300 hover:text-white transition-colors"
+                aria-label="LinkedIn"
               >
-                <LinkedinIcon className="w-5 h-5" />
+                <FaLinkedin className="w-5 h-5" />
+              </motion.a>
+              <motion.a
+                whileHover={{ y: -2 }}
+                href={whatsappLink}
+                target="_blank"
+                className="text-green-400 hover:text-green-300 transition-colors"
+                aria-label="WhatsApp"
+              >
+                <FaWhatsapp className="w-5 h-5" />
               </motion.a>
               <motion.a
                 whileHover={{ y: -2 }}
                 href="mailto:musa@example.com"
-                className="text-gray-300 hover:text-white"
+                className="text-gray-300 hover:text-white transition-colors"
+                aria-label="Email"
               >
                 <Mail className="w-5 h-5" />
               </motion.a>
@@ -147,8 +149,9 @@ export default function Navbar() {
                   target="_blank"
                   onClick={handleLinkClick}
                   className="text-gray-300 hover:text-white transition-colors p-2"
+                  aria-label="GitHub"
                 >
-                  <GithubIcon className="w-6 h-6" />
+                  <FaGithub className="w-6 h-6" />
                 </motion.a>
                 <motion.a
                   whileHover={{ y: -3 }}
@@ -156,14 +159,26 @@ export default function Navbar() {
                   target="_blank"
                   onClick={handleLinkClick}
                   className="text-gray-300 hover:text-white transition-colors p-2"
+                  aria-label="LinkedIn"
                 >
-                  <LinkedinIcon className="w-6 h-6" />
+                  <FaLinkedin className="w-6 h-6" />
+                </motion.a>
+                <motion.a
+                  whileHover={{ y: -3 }}
+                  href={whatsappLink}
+                  target="_blank"
+                  onClick={handleLinkClick}
+                  className="text-green-400 hover:text-green-300 transition-colors p-2"
+                  aria-label="WhatsApp"
+                >
+                  <FaWhatsapp className="w-6 h-6" />
                 </motion.a>
                 <motion.a
                   whileHover={{ y: -3 }}
                   href="mailto:musa@example.com"
                   onClick={handleLinkClick}
                   className="text-gray-300 hover:text-white transition-colors p-2"
+                  aria-label="Email"
                 >
                   <Mail className="w-6 h-6" />
                 </motion.a>
