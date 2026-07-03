@@ -131,7 +131,7 @@ export default function Hero() {
             </motion.h1>
 
             <motion.p variants={itemVariants} className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 max-w-2xl mx-auto lg:mx-0 px-4 sm:px-0">
-              I build exceptional and accessible digital experiences with modern web technologies. 5+ years of experience in full-stack development.
+              I build exceptional and accessible digital experiences with modern web technologies. 3+ years of experience in full-stack development.
             </motion.p>
 
             {/* Buttons - Wrapped in div with z-index to ensure clickability */}
