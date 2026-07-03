@@ -3,23 +3,16 @@
 import { motion } from "framer-motion";
 import { ArrowDown, Download, Mail, Code2 } from "lucide-react";
 import Image from "next/image";
-
-// Custom SVG Icons
-const GithubIcon = ({ className = "w-6 h-6" }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-  </svg>
-);
-
-const LinkedinIcon = ({ className = "w-6 h-6" }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-    <rect x="2" y="9" width="4" height="12"/>
-    <circle cx="4" cy="4" r="2"/>
-  </svg>
-);
+import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 export default function Hero() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -52,9 +45,42 @@ export default function Hero() {
     },
   };
 
+  // WhatsApp number
+  const whatsappNumber = "2348012345678";
+  const whatsappLink = `https://wa.me/${whatsappNumber}`;
+
+  // Direct click handlers - using useCallback to prevent re-renders
+  const handleViewWork = () => {
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
+  const handleDownloadCV = () => {
+    try {
+      const link = document.createElement('a');
+      link.href = '/cv.pdf';
+      link.download = 'Musa_Algoni_CV.pdf';
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      setTimeout(() => {
+        if (document.body.contains(link)) {
+          document.body.removeChild(link);
+        }
+      }, 100);
+    } catch (error) {
+      window.open('/cv.pdf', '_blank');
+    }
+  };
+
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
-      {/* Background animated circles - adjusted for mobile */}
+      {/* Background animated circles */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           className="absolute w-48 h-48 sm:w-72 sm:h-72 md:w-96 md:h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20"
@@ -108,60 +134,70 @@ export default function Hero() {
               I build exceptional and accessible digital experiences with modern web technologies. 5+ years of experience in full-stack development.
             </motion.p>
 
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start px-4 sm:px-0">
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href="#projects"
-                className="px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-white font-semibold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-all text-sm sm:text-base"
+            {/* Buttons - Wrapped in div with z-index to ensure clickability */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start px-4 sm:px-0 relative z-10">
+              <button
+                onClick={handleViewWork}
+                type="button"
+                className="px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-white font-semibold flex items-center justify-center gap-2 shadow-lg transition-all text-sm sm:text-base cursor-pointer hover:opacity-90 active:scale-95"
+                style={{ cursor: 'pointer', pointerEvents: 'auto' }}
               >
                 View My Work
                 <ArrowDown className="w-4 h-4" />
-              </motion.a>
+              </button>
 
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href="/resume.pdf"
-                className="px-6 sm:px-8 py-2.5 sm:py-3 bg-transparent border-2 border-purple-500 rounded-full text-purple-400 font-semibold flex items-center justify-center gap-2 hover:bg-purple-500/10 transition-all text-sm sm:text-base"
+              <button
+                onClick={handleDownloadCV}
+                type="button"
+                className="px-6 sm:px-8 py-2.5 sm:py-3 bg-transparent border-2 border-purple-500 rounded-full text-purple-400 font-semibold flex items-center justify-center gap-2 transition-all text-sm sm:text-base cursor-pointer hover:bg-purple-500/10 active:scale-95"
+                style={{ cursor: 'pointer', pointerEvents: 'auto' }}
               >
                 Download CV
                 <Download className="w-4 h-4" />
-              </motion.a>
-            </motion.div>
+              </button>
+            </div>
 
-            {/* Social Icons - Enhanced for mobile */}
-            <motion.div variants={itemVariants} className="flex gap-4 sm:gap-6 justify-center lg:justify-start mt-6 sm:mt-8">
-              <motion.a
-                whileHover={{ y: -3 }}
-                href="https://github.com"
+            {/* Social Icons */}
+            <div className="flex gap-4 sm:gap-6 justify-center lg:justify-start mt-6 sm:mt-8 relative z-10">
+              <a
+                href="https://github.com/yourusername"
                 target="_blank"
-                className="text-gray-400 hover:text-white transition-colors p-2 sm:p-0"
+                className="text-gray-400 hover:text-white transition-colors p-2 sm:p-0 cursor-pointer"
                 aria-label="GitHub"
+                style={{ pointerEvents: 'auto' }}
               >
-                <GithubIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-              </motion.a>
-              <motion.a
-                whileHover={{ y: -3 }}
-                href="https://linkedin.com"
+                <FaGithub className="w-5 h-5 sm:w-6 sm:h-6" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/emaicee"
                 target="_blank"
-                className="text-gray-400 hover:text-white transition-colors p-2 sm:p-0"
+                className="text-gray-400 hover:text-white transition-colors p-2 sm:p-0 cursor-pointer"
                 aria-label="LinkedIn"
+                style={{ pointerEvents: 'auto' }}
               >
-                <LinkedinIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-              </motion.a>
-              <motion.a
-                whileHover={{ y: -3 }}
-                href="mailto:musa@example.com"
-                className="text-gray-400 hover:text-white transition-colors p-2 sm:p-0"
+                <FaLinkedin className="w-5 h-5 sm:w-6 sm:h-6" />
+              </a>
+              <a
+                href={whatsappLink}
+                target="_blank"
+                className="text-gray-400 hover:text-green-400 transition-colors p-2 sm:p-0 cursor-pointer"
+                aria-label="WhatsApp"
+                style={{ pointerEvents: 'auto' }}
+              >
+                <FaWhatsapp className="w-5 h-5 sm:w-6 sm:h-6" />
+              </a>
+              <a
+                href="mailto:algonimusa202@gmail.com"
+                className="text-gray-400 hover:text-white transition-colors p-2 sm:p-0 cursor-pointer"
                 aria-label="Email"
+                style={{ pointerEvents: 'auto' }}
               >
                 <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
-              </motion.a>
-            </motion.div>
+              </a>
+            </div>
           </div>
 
-          {/* Animated Profile Picture - Responsive sizing */}
+          {/* Animated Profile Picture */}
           <motion.div
             variants={itemVariants}
             className="flex-1 flex justify-center mt-8 lg:mt-0"
@@ -170,7 +206,6 @@ export default function Hero() {
               animate={floatingAnimation}
               className="relative group"
             >
-              {/* Animated Border */}
               <motion.div
                 className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full blur-xl opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"
                 animate={{
@@ -182,7 +217,6 @@ export default function Hero() {
                 }}
               />
               
-              {/* Profile Image Container - Responsive sizes */}
               <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl mx-auto">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 z-10" />
                 <Image
@@ -195,7 +229,6 @@ export default function Hero() {
                 />
               </div>
 
-              {/* Tech Icons floating around - Hidden on very small screens */}
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
@@ -210,7 +243,6 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Scroll Indicator - Hidden on very small screens */}
       <motion.div
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
