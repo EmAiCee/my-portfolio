@@ -55,7 +55,7 @@ export default function Contact() {
 
   const contactInfo = [
     { icon: Mail, label: "Email", value: "algonimusa202@gmail.com", href: "mailto:algonimusa202@gmail.com" },
-    { icon: Phone, label: "Phone", value: "+234 (XXX) XXX-XXXX", href: "tel:+234" },
+    { icon: Phone, label: "Phone", value: "+2349014899278", href: "tel:+234" },
     { icon: MapPin, label: "Location", value: "Nigeria", href: "#" },
   ];
 

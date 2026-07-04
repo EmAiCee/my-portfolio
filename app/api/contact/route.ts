@@ -57,7 +57,7 @@ export async function POST(request: Request) {
           <hr />
           <p style="color: #6b7280; font-size: 12px;">Message ID: ${newMessage._id}</p>
           <p style="color: #6b7280; font-size: 12px;">Sent from your portfolio website</p>
-          <p style="color: #6b7280; font-size: 12px;">Login to admin dashboard to reply: http://localhost:3000/admin/login</p>
+          <p style="color: #6b7280; font-size: 12px;">Login to admin dashboard to reply: https://my-portfolio-seven-pink-33.vercel.app/admin/login</p>
         </div>
       `,
     });
@@ -81,7 +81,7 @@ export async function POST(request: Request) {
           
             
             <div style="background: #e0e7ff; padding: 15px; border-radius: 10px; margin: 20px 0;">
-              <p style="color: #4338ca; margin: 0; font-size: 14px;">📞 In the meantime, you can reach me at: <strong>algonimusa202@gmail.com</strong></p>
+              <p style="color: #4338ca; margin: 0; font-size: 14px;">📞 In the meantime, you can reach me at: <strong>algonimusa202@gmail.com , +2349014899278</strong></p>
             </div>
             
             <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 20px 0;" />
