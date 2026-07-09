@@ -28,9 +28,10 @@ export async function GET() {
   try {
     await connectDB();
     const projects = await Project.find().sort({ createdAt: -1 });
+    console.log(`📦 Projects API - Found ${projects.length} projects`);
     return NextResponse.json(projects);
   } catch (error) {
-    console.error('Fetch projects error:', error);
+    console.error('❌ Fetch projects error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

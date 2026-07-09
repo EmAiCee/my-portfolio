@@ -24,8 +24,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   
-  // ✅ ALLOW public GET requests to /api/projects
-  if (pathname === '/api/projects' && request.method === 'GET') {
+  // ✅ ALLOW public GET requests to /api/projects and /api/projects/[id]
+  if (pathname.startsWith('/api/projects') && request.method === 'GET') {
     console.log('✅ Middleware - Public GET to projects, allowing');
     return NextResponse.next();
   }
@@ -46,7 +46,6 @@ export async function middleware(request: NextRequest) {
     }
     
     try {
-      // Verify token using jose (works in Edge runtime)
       const { payload } = await jwtVerify(token, secret);
       console.log('✅ Middleware - Token valid for:', payload.email);
       return NextResponse.next();

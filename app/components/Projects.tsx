@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect, useMemo } from "react";
+import { useRouter } from "next/navigation";
 
 // Custom SVG Icons
 const GithubIcon = ({ className = "w-4 h-4" }) => (
@@ -32,8 +33,8 @@ export default function Projects() {
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
-  // Fetch projects from API
   useEffect(() => {
     fetchProjects();
   }, []);
@@ -59,7 +60,6 @@ export default function Projects() {
     }
   };
 
-  // Filter projects based on active category
   const filteredProjects = useMemo(() => {
     if (!projects || projects.length === 0) return [];
     if (activeCategory === "All") {
@@ -68,7 +68,6 @@ export default function Projects() {
     return projects.filter(project => project.category === activeCategory);
   }, [projects, activeCategory]);
 
-  // Show featured projects first
   const sortedProjects = useMemo(() => {
     if (!filteredProjects || filteredProjects.length === 0) return [];
     return [...filteredProjects].sort((a, b) => {
@@ -97,6 +96,10 @@ export default function Projects() {
         stiffness: 100,
       },
     },
+  };
+
+  const handleProjectClick = (projectId: string) => {
+    router.push(`/projects/${projectId}`);
   };
 
   if (isLoading) {
@@ -206,26 +209,34 @@ export default function Projects() {
               <motion.div
                 key={project._id}
                 variants={itemVariants}
+                onClick={() => handleProjectClick(project._id)}
                 onMouseEnter={() => setHoveredProject(project._id)}
                 onMouseLeave={() => setHoveredProject(null)}
-                className="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:border-purple-500/50 transition-all duration-300 group"
+                className="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 hover:border-purple-500/50 transition-all duration-300 group cursor-pointer"
               >
-                {/* Project Image */}
-                <div className="relative h-48 overflow-hidden">
+                {/* Project Image - With colorful gradient background */}
+                <div className="relative h-32 w-full overflow-hidden bg-gray-800">
+                  {/* Animated background circles */}
+                  <div className="absolute inset-0">
+                    <div className="absolute top-0 left-0 w-32 h-32 bg-purple-500/30 rounded-full blur-2xl animate-pulse"></div>
+                    <div className="absolute bottom-0 right-0 w-32 h-32 bg-pink-500/30 rounded-full blur-2xl animate-pulse delay-1000"></div>
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-500"></div>
+                  </div>
+                  
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="object-contain relative z-10"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.src = 'https://placehold.co/600x400/1e1b4b/ffffff?text=Project';
                     }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10" />
                   {project.featured && (
-                    <div className="absolute top-2 right-2 bg-yellow-500/90 text-black text-xs font-bold px-2 py-1 rounded-full">
+                    <div className="absolute top-2 right-2 bg-yellow-500/90 text-black text-xs font-bold px-2 py-1 rounded-full z-20">
                       FEATURED
                     </div>
                   )}
@@ -238,6 +249,9 @@ export default function Projects() {
                   </h3>
                   <p className="text-gray-400 mb-4 line-clamp-2">
                     {project.description}
+                    {project.description.length > 120 && (
+                      <span className="text-purple-400 text-sm ml-1">Read More</span>
+                    )}
                   </p>
 
                   {/* Tech Stack */}
@@ -265,6 +279,7 @@ export default function Projects() {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
                       className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
                     >
                       <GithubIcon className="w-4 h-4" />
@@ -276,6 +291,7 @@ export default function Projects() {
                       href={project.live}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
                       className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
                     >
                       <ExternalLink className="w-4 h-4" />
