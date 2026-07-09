@@ -4,7 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 // Official JavaScript Icon
-const JavascriptIcon = ({ className = "w-5 h-5" }) => (
+const JavascriptIcon = ({ className = "w-4 h-4 sm:w-5 sm:h-5" }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <rect x="2" y="2" width="20" height="20" rx="2" fill="#F7DF1E" stroke="none"/>
     <text x="12" y="17" fontSize="10" textAnchor="middle" fill="#000000" fontFamily="Arial, sans-serif" fontWeight="bold">JS</text>
@@ -12,7 +12,7 @@ const JavascriptIcon = ({ className = "w-5 h-5" }) => (
 );
 
 // Official TypeScript Icon
-const TypescriptIcon = ({ className = "w-5 h-5" }) => (
+const TypescriptIcon = ({ className = "w-4 h-4 sm:w-5 sm:h-5" }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <rect x="2" y="2" width="20" height="20" rx="2" fill="#3178C6" stroke="none"/>
     <text x="12" y="17" fontSize="10" textAnchor="middle" fill="#FFFFFF" fontFamily="Arial, sans-serif" fontWeight="bold">TS</text>
@@ -20,7 +20,7 @@ const TypescriptIcon = ({ className = "w-5 h-5" }) => (
 );
 
 // Custom Professional SVG Icons for other skills
-const NextjsIcon = ({ className = "w-5 h-5" }) => (
+const NextjsIcon = ({ className = "w-4 h-4 sm:w-5 sm:h-5" }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 2L2 7l10 5 10-5-10-5z"/>
     <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
@@ -28,7 +28,7 @@ const NextjsIcon = ({ className = "w-5 h-5" }) => (
   </svg>
 );
 
-const ReactIcon = ({ className = "w-5 h-5" }) => (
+const ReactIcon = ({ className = "w-4 h-4 sm:w-5 sm:h-5" }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="2.5"/>
     <path d="M12 2a15 15 0 0 0 0 20 15 15 0 0 0 0-20z" opacity="0.5"/>
@@ -38,14 +38,14 @@ const ReactIcon = ({ className = "w-5 h-5" }) => (
   </svg>
 );
 
-const HtmlIcon = ({ className = "w-5 h-5" }) => (
+const HtmlIcon = ({ className = "w-4 h-4 sm:w-5 sm:h-5" }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M4 4l2 16 6 2 6-2 2-16H4z"/>
     <path d="M8 8h8M8 12h6M10 16h4"/>
   </svg>
 );
 
-const CssIcon = ({ className = "w-5 h-5" }) => (
+const CssIcon = ({ className = "w-4 h-4 sm:w-5 sm:h-5" }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M4 4l2 16 6 2 6-2 2-16H4z"/>
     <path d="M8 8h8M7 12h10M9 16h6"/>
@@ -53,27 +53,27 @@ const CssIcon = ({ className = "w-5 h-5" }) => (
   </svg>
 );
 
-const NodeIcon = ({ className = "w-5 h-5" }) => (
+const NodeIcon = ({ className = "w-4 h-4 sm:w-5 sm:h-5" }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="10"/>
     <path d="M12 8v8M8 12h8"/>
   </svg>
 );
 
-const GitIcon = ({ className = "w-5 h-5" }) => (
+const GitIcon = ({ className = "w-4 h-4 sm:w-5 sm:h-5" }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="2"/>
     <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
   </svg>
 );
 
-const GithubIcon = ({ className = "w-5 h-5" }) => (
+const GithubIcon = ({ className = "w-4 h-4 sm:w-5 sm:h-5" }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
   </svg>
 );
 
-const MongodbIcon = ({ className = "w-5 h-5" }) => (
+const MongodbIcon = ({ className = "w-4 h-4 sm:w-5 sm:h-5" }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <ellipse cx="12" cy="5" rx="9" ry="3"/>
     <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
@@ -82,7 +82,7 @@ const MongodbIcon = ({ className = "w-5 h-5" }) => (
   </svg>
 );
 
-const PostgresIcon = ({ className = "w-5 h-5" }) => (
+const PostgresIcon = ({ className = "w-4 h-4 sm:w-5 sm:h-5" }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <ellipse cx="12" cy="5" rx="9" ry="3"/>
     <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
@@ -92,28 +92,28 @@ const PostgresIcon = ({ className = "w-5 h-5" }) => (
 );
 
 // Professional Icons for Stats
-const BriefcaseIcon = ({ className = "w-8 h-8" }) => (
+const BriefcaseIcon = ({ className = "w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
     <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
   </svg>
 );
 
-const ProjectIcon = ({ className = "w-8 h-8" }) => (
+const ProjectIcon = ({ className = "w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
     <polyline points="22 4 12 14.01 9 11.01"/>
   </svg>
 );
 
-const ClientIcon = ({ className = "w-8 h-8" }) => (
+const ClientIcon = ({ className = "w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
     <circle cx="12" cy="7" r="4"/>
   </svg>
 );
 
-const StackIcon = ({ className = "w-8 h-8" }) => (
+const StackIcon = ({ className = "w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
     <line x1="8" y1="2" x2="8" y2="22"/>
@@ -124,17 +124,17 @@ const StackIcon = ({ className = "w-8 h-8" }) => (
 );
 
 const skills = [
-  { name: "Next.js", level: 90, icon: <NextjsIcon className="w-5 h-5" /> },
-  { name: "React", level: 92, icon: <ReactIcon className="w-5 h-5" /> },
-  { name: "TypeScript", level: 88, icon: <TypescriptIcon className="w-5 h-5" /> },
-  { name: "HTML", level: 95, icon: <HtmlIcon className="w-5 h-5" /> },
-  { name: "CSS", level: 92, icon: <CssIcon className="w-5 h-5" /> },
-  { name: "JavaScript", level: 94, icon: <JavascriptIcon className="w-5 h-5" /> },
-  { name: "Node.js", level: 87, icon: <NodeIcon className="w-5 h-5" /> },
-  { name: "Git", level: 90, icon: <GitIcon className="w-5 h-5" /> },
-  { name: "GitHub", level: 92, icon: <GithubIcon className="w-5 h-5" /> },
-  { name: "MongoDB", level: 93, icon: <MongodbIcon className="w-5 h-5" /> },
-  { name: "PostgreSQL", level: 86, icon: <PostgresIcon className="w-5 h-5" /> },
+  { name: "Next.js", level: 90, icon: <NextjsIcon className="w-4 h-4 sm:w-5 sm:h-5" /> },
+  { name: "React", level: 92, icon: <ReactIcon className="w-4 h-4 sm:w-5 sm:h-5" /> },
+  { name: "TypeScript", level: 88, icon: <TypescriptIcon className="w-4 h-4 sm:w-5 sm:h-5" /> },
+  { name: "HTML", level: 95, icon: <HtmlIcon className="w-4 h-4 sm:w-5 sm:h-5" /> },
+  { name: "CSS", level: 92, icon: <CssIcon className="w-4 h-4 sm:w-5 sm:h-5" /> },
+  { name: "JavaScript", level: 94, icon: <JavascriptIcon className="w-4 h-4 sm:w-5 sm:h-5" /> },
+  { name: "Node.js", level: 87, icon: <NodeIcon className="w-4 h-4 sm:w-5 sm:h-5" /> },
+  { name: "Git", level: 90, icon: <GitIcon className="w-4 h-4 sm:w-5 sm:h-5" /> },
+  { name: "GitHub", level: 92, icon: <GithubIcon className="w-4 h-4 sm:w-5 sm:h-5" /> },
+  { name: "MongoDB", level: 93, icon: <MongodbIcon className="w-4 h-4 sm:w-5 sm:h-5" /> },
+  { name: "PostgreSQL", level: 86, icon: <PostgresIcon className="w-4 h-4 sm:w-5 sm:h-5" /> },
 ];
 
 const SkillBar = ({ skill, index }: { skill: any; index: number }) => {
@@ -146,21 +146,21 @@ const SkillBar = ({ skill, index }: { skill: any; index: number }) => {
       ref={ref}
       initial={{ opacity: 0, x: -20 }}
       animate={isInView ? { opacity: 1, x: 0 } : {}}
-      transition={{ delay: index * 0.1 }}
-      className="mb-4"
+      transition={{ delay: index * 0.05 }}
+      className="mb-1.5 sm:mb-2"
     >
-      <div className="flex justify-between mb-2">
-        <span className="text-gray-300 font-medium flex items-center gap-2">
+      <div className="flex justify-between mb-0.5">
+        <span className="text-gray-300 font-medium flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs md:text-sm">
           <span className="text-purple-400">{skill.icon}</span>
           {skill.name}
         </span>
-        <span className="text-purple-400">{skill.level}%</span>
+        <span className="text-purple-400 text-[10px] sm:text-xs md:text-sm">{skill.level}%</span>
       </div>
-      <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+      <div className="h-1 sm:h-1.5 bg-white/10 rounded-full overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
           animate={isInView ? { width: `${skill.level}%` } : {}}
-          transition={{ duration: 1, delay: index * 0.1 }}
+          transition={{ duration: 0.8, delay: index * 0.05 }}
           className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"
         />
       </div>
@@ -180,34 +180,34 @@ export default function Skills() {
   };
 
   return (
-    <section id="skills" className="py-20 px-4 relative overflow-hidden">
-      <div className="max-w-5xl mx-auto">
-        {/* Section Header */}
+    <section id="skills" className="py-6 sm:py-8 md:py-10 pb-2 sm:pb-3 md:pb-4 px-3 sm:px-4 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        {/* Section Header - Reduced margin */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-4 sm:mb-6 md:mb-8"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2">
             Technical{" "}
             <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
               Skills
             </span>
           </h2>
-          <p className="text-gray-300 max-w-2xl mx-auto">
+          <p className="text-gray-300 text-xs sm:text-sm max-w-2xl mx-auto px-2">
             Technologies and tools I work with to build amazing applications
           </p>
         </motion.div>
 
-        {/* Skills Grid */}
+        {/* Skills Grid - 2 columns on ALL screens */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4"
         >
           {skills.map((skill, index) => (
             <motion.div
@@ -222,28 +222,28 @@ export default function Skills() {
           ))}
         </motion.div>
 
-        {/* Additional Stats */}
+        {/* Additional Stats - Reduced margin */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4"
+          className="mt-4 sm:mt-6 md:mt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4"
         >
           {[
-            { label: "Years Experience", value: "5+", icon: <BriefcaseIcon className="w-8 h-8" /> },
-            { label: "Projects Completed", value: "50+", icon: <ProjectIcon className="w-8 h-8" /> },
-            { label: "Happy Clients", value: "30+", icon: <ClientIcon className="w-8 h-8" /> },
-            { label: "Tech Stack", value: "11+", icon: <StackIcon className="w-8 h-8" /> },
+            { label: "Years Experience", value: "3+", icon: <BriefcaseIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" /> },
+            { label: "Projects Completed", value: "15+", icon: <ProjectIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" /> },
+            { label: "Happy Clients", value: "10+", icon: <ClientIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" /> },
+            { label: "Tech Stack", value: "11+", icon: <StackIcon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" /> },
           ].map((stat, idx) => (
             <motion.div
               key={stat.label}
               whileHover={{ scale: 1.05 }}
-              className="bg-white/5 backdrop-blur-sm rounded-lg p-4 text-center border border-white/10"
+              className="bg-white/5 backdrop-blur-sm rounded-lg p-2 sm:p-3 text-center border border-white/10"
             >
-              <div className="text-purple-400 mb-2 flex justify-center">{stat.icon}</div>
-              <div className="text-2xl font-bold text-purple-400">{stat.value}</div>
-              <div className="text-sm text-gray-400">{stat.label}</div>
+              <div className="text-purple-400 mb-0.5 flex justify-center">{stat.icon}</div>
+              <div className="text-sm sm:text-lg md:text-2xl font-bold text-purple-400">{stat.value}</div>
+              <div className="text-[8px] sm:text-[10px] md:text-sm text-gray-400">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>
