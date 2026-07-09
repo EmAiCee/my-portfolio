@@ -76,7 +76,7 @@ export default function Hero() {
 
   return (
     <section id="home" className="min-h-[85vh] sm:min-h-[90vh] md:min-h-screen flex items-center justify-center relative overflow-hidden pt-14 sm:pt-16 md:pt-20 pb-0">
-      {/* Background animated circles - responsive sizing */}
+      {/* Background animated circles */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           className="absolute w-40 h-40 sm:w-56 sm:h-56 md:w-80 md:h-80 lg:w-96 lg:h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20"
@@ -111,7 +111,7 @@ export default function Hero() {
           animate="visible"
           className="flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-8 md:gap-10 lg:gap-12"
         >
-          {/* Text Content - Full width on mobile, half on desktop */}
+          {/* Text Content */}
           <div className="flex-1 w-full sm:w-auto text-center sm:text-left">
             <motion.div variants={itemVariants}>
               <span className="inline-block px-3 sm:px-4 py-1 sm:py-1.5 md:py-2 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-400 text-xs sm:text-sm font-semibold mb-2 sm:mb-3 md:mb-4">
@@ -130,8 +130,8 @@ export default function Hero() {
               I build exceptional and accessible digital experiences with modern web technologies. 3+ years of experience in full-stack development.
             </motion.p>
 
-            {/* Buttons */}
-            <div className="flex flex-wrap gap-3 sm:gap-4 justify-center sm:justify-start">
+            {/* Buttons - Placed OUTSIDE motion to ensure clickability */}
+            <div className="flex flex-wrap gap-3 sm:gap-4 justify-center sm:justify-start relative z-20">
               <button
                 onClick={handleViewWork}
                 type="button"
@@ -189,7 +189,7 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Profile Picture - Responsive */}
+          {/* Profile Picture */}
           <div className="flex-shrink-0 mt-4 sm:mt-0">
             <motion.div
               animate={floatingAnimation}
@@ -232,7 +232,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Scroll Indicator - Responsive, minimal */}
+      {/* Scroll Indicator */}
       <motion.div
         animate={{ y: [0, 6, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
