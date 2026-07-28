@@ -50,7 +50,7 @@ export default function Navbar() {
           >
             <Code2 className="w-7 h-7 sm:w-8 sm:h-8 text-purple-500" />
             <span className="text-base sm:text-xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
-              My-Portfolio
+             <i> My-Portfolio</i>
             </span>
           </motion.div>
 
